@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Multimedia, BIS2107</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14120f;
+    --amber: #e3a857;
+    --muted: #a79c8c;
+    --cream: #f3ece2;
+    --font-display: "Fraunces", serif;
+    --font-body: "Work Sans", sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    background: var(--ink);
+    color: var(--muted);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  main {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(70vw, 640px);
+    height: min(70vw, 640px);
+    transform: translate(-50%, -50%);
+    background: radial-gradient(
+      circle,
+      rgba(227, 168, 87, 0.32) 0%,
+      rgba(227, 168, 87, 0.1) 40%,
+      rgba(227, 168, 87, 0) 70%
+    );
+    filter: blur(10px);
+    animation: pulse 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.75; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.06); }
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Fade-in on load, staggered per asset */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeInUp 0.9s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .logo-wrap {
+    animation-delay: 0.1s;
+  }
+
+  .eyebrow {
+    animation-delay: 0.4s;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.25rem;
+  }
+
+  h1 {
+    animation-delay: 0.55s;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(2.4rem, 7vw, 4.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--cream);
+  }
+
+  h1 span {
+    display: block;
+    font-style: normal;
+    font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+    letter-spacing: 0.04em;
+    color: var(--amber);
+    margin-top: 0.75rem;
+  }
+
+  .subtext {
+    animation-delay: 0.75s;
+    font-size: clamp(0.85rem, 1.6vw, 1rem);
+    color: var(--muted);
+    margin-top: 1.5rem;
+    max-width: 32ch;
+  }
+
+  /* Cursor-tilt: each asset pivots toward the cursor while hovered */
+  .tilt-zone {
+    perspective: 700px;
+  }
+
+  .tilt {
+    transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.35s ease;
+    will-change: transform;
+  }
+
+  .tilt-zone:hover .tilt {
+    transition: transform 0.08s linear;
+  }
+
+  .logo-wrap img {
+    width: clamp(72px, 12vw, 120px);
+    height: auto;
+    display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glow { animation: none; }
+    .fade-in { animation: none; opacity: 1; transform: none; }
+    .tilt { transition: none; transform: none !important; }
+  }
+</style>
+</head>
+<body>
+  <main>
+    <div class="glow" aria-hidden="true"></div>
+    <div class="content">
+      <div class="tilt-zone logo-wrap fade-in">
+        <div class="tilt">
+          <img src="logo.png" alt="Arab Academy for Science, Technology and Maritime Transport" />
+        </div>
+      </div>
+      <p class="eyebrow fade-in">Course</p>
+      <div class="tilt-zone">
+        <h1 class="tilt fade-in">Multimedia<span>BIS2107</span></h1>
+      </div>
+      <div class="tilt-zone">
+        <p class="subtext tilt fade-in">This site displays Text, Graphics, and animations</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.querySelectorAll(".tilt-zone").forEach((zone) => {
+      const el = zone.querySelector(".tilt");
+      if (!el) return;
+
+      zone.addEventListener("mousemove", (e) => {
+        const rect = zone.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const max = 12;
+        el.style.setProperty("--ry", (x * max * 2) + "deg");
+        el.style.setProperty("--rx", (-y * max * 2) + "deg");
+      });
+
+      zone.addEventListener("mouseleave", () => {
+        el.style.setProperty("--rx", "0deg");
+        el.style.setProperty("--ry", "0deg");
+      });
+    });
+  </script>
+</body>
+</html>
