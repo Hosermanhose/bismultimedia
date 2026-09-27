@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Multimedia, BIS2107</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14120f;
+    --amber: #e3a857;
+    --muted: #a79c8c;
+    --cream: #f3ece2;
+    --font-display: "Fraunces", serif;
+    --font-body: "Work Sans", sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    background: var(--ink);
+    color: var(--muted);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  main {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(70vw, 640px);
+    height: min(70vw, 640px);
+    transform: translate(-50%, -50%);
+    background: radial-gradient(
+      circle,
+      rgba(227, 168, 87, 0.32) 0%,
+      rgba(227, 168, 87, 0.1) 40%,
+      rgba(227, 168, 87, 0) 70%
+    );
+    filter: blur(10px);
+    animation: pulse 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.75; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.06); }
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  /* Fade-in on load, staggered per asset */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeInUp 0.9s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow {
+    animation-delay: 0.3s;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  .eyebrow::before,
+  .eyebrow::after {
+    content: "";
+    display: inline-block;
+    width: 22px;
+    height: 1px;
+    background: var(--amber);
+    vertical-align: middle;
+    margin: 0 0.7em;
+    opacity: 0.7;
+  }
+
+  /* ---------- Pivoting bordered boxes ---------- */
+  .tilt-zone {
+    perspective: 800px;
+  }
+
+  .pivot-box {
+    transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.4s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
+    border: 1.5px solid rgba(243, 236, 226, 0.35);
+    border-radius: 16px;
+    background: rgba(243, 236, 226, 0.03);
+    box-shadow: 0 20px 50px -25px rgba(0, 0, 0, 0.6);
+  }
+
+  .tilt-zone:hover .pivot-box {
+    transition: transform 0.08s linear, border-color 0.3s ease, box-shadow 0.3s ease;
+    border-color: rgba(243, 236, 226, 0.75);
+    box-shadow: 0 25px 60px -20px rgba(227, 168, 87, 0.25);
+  }
+
+  .logo-box {
+    animation-delay: 0.1s;
+    padding: 1.4rem 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-box img {
+    width: clamp(64px, 10vw, 100px);
+    height: auto;
+    display: block;
+  }
+
+  .title-box {
+    animation-delay: 0.55s;
+    padding: 1.6rem 2.4rem;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(2.2rem, 6.5vw, 4.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--cream);
+    text-shadow: 0 0 24px rgba(227, 168, 87, 0.3);
+  }
+
+  h1 span {
+    display: block;
+    font-style: normal;
+    font-weight: 500;
+    font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+    letter-spacing: 0.16em;
+    color: var(--amber);
+    margin-top: 0.85rem;
+    position: relative;
+    padding-top: 0.85rem;
+  }
+
+  h1 span::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 1px;
+    background: var(--amber);
+    opacity: 0.6;
+  }
+
+  .subtext-box {
+    animation-delay: 0.8s;
+    padding: 1.1rem 1.8rem;
+  }
+
+  .subtext {
+    font-size: clamp(0.85rem, 1.6vw, 1rem);
+    font-style: italic;
+    color: var(--muted);
+    max-width: 32ch;
+  }
+
+  /* ---------- Corner credit text ---------- */
+  .credit {
+    position: fixed;
+    bottom: clamp(1rem, 3vw, 1.75rem);
+    font-size: clamp(0.7rem, 1.6vw, 0.85rem);
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    z-index: 1;
+    animation-delay: 1.05s;
+  }
+
+  .credit.left {
+    left: clamp(1rem, 3vw, 1.75rem);
+  }
+
+  .credit.right {
+    right: clamp(1rem, 3vw, 1.75rem);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glow { animation: none; }
+    .fade-in { animation: none; opacity: 1; transform: none; }
+    .pivot-box { transition: none; transform: none !important; }
+  }
+
+  @media (max-width: 480px) {
+    .eyebrow::before,
+    .eyebrow::after {
+      width: 14px;
+      margin: 0 0.5em;
+    }
+  }
+</style>
+</head>
+<body>
+  <main>
+    <div class="glow" aria-hidden="true"></div>
+    <div class="content">
+      <div class="tilt-zone">
+        <div class="pivot-box logo-box fade-in">
+          <img src="logo.png" alt="Arab Academy for Science, Technology and Maritime Transport" />
+        </div>
+      </div>
+      <p class="eyebrow fade-in">Course</p>
+      <div class="tilt-zone">
+        <div class="pivot-box title-box fade-in">
+          <h1>Multimedia<span>BIS2107</span></h1>
+        </div>
+      </div>
+      <div class="tilt-zone">
+        <div class="pivot-box subtext-box fade-in">
+          <p class="subtext">This site displays Text, Graphics, and animations</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <p class="credit left fade-in">Hassan Tamer</p>
+  <p class="credit right fade-in">251014296</p>
+
+  <script>
+    document.querySelectorAll(".tilt-zone").forEach((zone) => {
+      const el = zone.querySelector(".pivot-box");
+      if (!el) return;
+
+      zone.addEventListener("mousemove", (e) => {
+        const rect = zone.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const max = 10;
+        el.style.setProperty("--ry", (x * max * 2) + "deg");
+        el.style.setProperty("--rx", (-y * max * 2) + "deg");
+      });
+
+      zone.addEventListener("mouseleave", () => {
+        el.style.setProperty("--rx", "0deg");
+        el.style.setProperty("--ry", "0deg");
+      });
+    });
+  </script>
+</body>
+</html>
