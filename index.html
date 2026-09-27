@@ -6,7 +6,7 @@
 <title>Multimedia, BIS2107</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #14120f;
@@ -74,6 +74,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1.5rem;
   }
 
   /* Fade-in on load, staggered per asset */
@@ -87,74 +88,146 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .logo-wrap {
-    animation-delay: 0.1s;
-  }
-
   .eyebrow {
-    animation-delay: 0.4s;
+    animation-delay: 0.3s;
     font-family: var(--font-body);
     font-weight: 500;
     font-size: 0.75rem;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--amber);
-    margin-bottom: 1.25rem;
+  }
+
+  .eyebrow::before,
+  .eyebrow::after {
+    content: "";
+    display: inline-block;
+    width: 22px;
+    height: 1px;
+    background: var(--amber);
+    vertical-align: middle;
+    margin: 0 0.7em;
+    opacity: 0.7;
+  }
+
+  /* ---------- Pivoting bordered boxes ---------- */
+  .tilt-zone {
+    perspective: 800px;
+  }
+
+  .pivot-box {
+    transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.4s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
+    border: 1.5px solid rgba(243, 236, 226, 0.35);
+    border-radius: 16px;
+    background: rgba(243, 236, 226, 0.03);
+    box-shadow: 0 20px 50px -25px rgba(0, 0, 0, 0.6);
+  }
+
+  .tilt-zone:hover .pivot-box {
+    transition: transform 0.08s linear, border-color 0.3s ease, box-shadow 0.3s ease;
+    border-color: rgba(243, 236, 226, 0.75);
+    box-shadow: 0 25px 60px -20px rgba(227, 168, 87, 0.25);
+  }
+
+  .logo-box {
+    animation-delay: 0.1s;
+    padding: 1.4rem 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-box img {
+    width: clamp(64px, 10vw, 100px);
+    height: auto;
+    display: block;
+  }
+
+  .title-box {
+    animation-delay: 0.55s;
+    padding: 1.6rem 2.4rem;
   }
 
   h1 {
-    animation-delay: 0.55s;
     font-family: var(--font-display);
     font-weight: 400;
     font-style: italic;
-    font-size: clamp(2.4rem, 7vw, 4.5rem);
+    font-size: clamp(2.2rem, 6.5vw, 4.2rem);
     line-height: 1.1;
     letter-spacing: -0.01em;
     color: var(--cream);
+    text-shadow: 0 0 24px rgba(227, 168, 87, 0.3);
   }
 
   h1 span {
     display: block;
     font-style: normal;
-    font-size: clamp(1.1rem, 2.4vw, 1.5rem);
-    letter-spacing: 0.04em;
+    font-weight: 500;
+    font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+    letter-spacing: 0.16em;
     color: var(--amber);
-    margin-top: 0.75rem;
+    margin-top: 0.85rem;
+    position: relative;
+    padding-top: 0.85rem;
+  }
+
+  h1 span::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 1px;
+    background: var(--amber);
+    opacity: 0.6;
+  }
+
+  .subtext-box {
+    animation-delay: 0.8s;
+    padding: 1.1rem 1.8rem;
   }
 
   .subtext {
-    animation-delay: 0.75s;
     font-size: clamp(0.85rem, 1.6vw, 1rem);
+    font-style: italic;
     color: var(--muted);
-    margin-top: 1.5rem;
     max-width: 32ch;
   }
 
-  /* Cursor-tilt: each asset pivots toward the cursor while hovered */
-  .tilt-zone {
-    perspective: 700px;
+  /* ---------- Corner credit text ---------- */
+  .credit {
+    position: fixed;
+    bottom: clamp(1rem, 3vw, 1.75rem);
+    font-size: clamp(0.7rem, 1.6vw, 0.85rem);
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    z-index: 1;
+    animation-delay: 1.05s;
   }
 
-  .tilt {
-    transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-    transition: transform 0.35s ease;
-    will-change: transform;
+  .credit.left {
+    left: clamp(1rem, 3vw, 1.75rem);
   }
 
-  .tilt-zone:hover .tilt {
-    transition: transform 0.08s linear;
-  }
-
-  .logo-wrap img {
-    width: clamp(72px, 12vw, 120px);
-    height: auto;
-    display: block;
+  .credit.right {
+    right: clamp(1rem, 3vw, 1.75rem);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .glow { animation: none; }
     .fade-in { animation: none; opacity: 1; transform: none; }
-    .tilt { transition: none; transform: none !important; }
+    .pivot-box { transition: none; transform: none !important; }
+  }
+
+  @media (max-width: 480px) {
+    .eyebrow::before,
+    .eyebrow::after {
+      width: 14px;
+      margin: 0 0.5em;
+    }
   }
 </style>
 </head>
@@ -162,31 +235,38 @@
   <main>
     <div class="glow" aria-hidden="true"></div>
     <div class="content">
-      <div class="tilt-zone logo-wrap fade-in">
-        <div class="tilt">
+      <div class="tilt-zone">
+        <div class="pivot-box logo-box fade-in">
           <img src="logo.png" alt="Arab Academy for Science, Technology and Maritime Transport" />
         </div>
       </div>
       <p class="eyebrow fade-in">Course</p>
       <div class="tilt-zone">
-        <h1 class="tilt fade-in">Multimedia<span>BIS2107</span></h1>
+        <div class="pivot-box title-box fade-in">
+          <h1>Multimedia<span>BIS2107</span></h1>
+        </div>
       </div>
       <div class="tilt-zone">
-        <p class="subtext tilt fade-in">This site displays Text, Graphics, and animations</p>
+        <div class="pivot-box subtext-box fade-in">
+          <p class="subtext">This site displays Text, Graphics, and animations</p>
+        </div>
       </div>
     </div>
   </main>
 
+  <p class="credit left fade-in">Hassan Tamer</p>
+  <p class="credit right fade-in">251014296</p>
+
   <script>
     document.querySelectorAll(".tilt-zone").forEach((zone) => {
-      const el = zone.querySelector(".tilt");
+      const el = zone.querySelector(".pivot-box");
       if (!el) return;
 
       zone.addEventListener("mousemove", (e) => {
         const rect = zone.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
-        const max = 12;
+        const max = 10;
         el.style.setProperty("--ry", (x * max * 2) + "deg");
         el.style.setProperty("--rx", (-y * max * 2) + "deg");
       });
