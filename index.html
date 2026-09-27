@@ -13,8 +13,6 @@
     --amber: #e3a857;
     --muted: #a79c8c;
     --cream: #f3ece2;
-    --amber-deep: #9c6b24;
-    --muted-on-paper: #6b6255;
     --font-display: "Fraunces", serif;
     --font-body: "Work Sans", sans-serif;
   }
@@ -119,18 +117,18 @@
 
   .pivot-box {
     transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-    transition: transform 0.4s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.4s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     will-change: transform;
-    background: var(--cream);
-    border: 1px solid transparent;
+    border: 1.5px solid rgba(243, 236, 226, 0.35);
     border-radius: 16px;
-    box-shadow: 0 20px 45px -18px rgba(0, 0, 0, 0.55);
+    background: rgba(243, 236, 226, 0.03);
+    box-shadow: 0 20px 50px -25px rgba(0, 0, 0, 0.6);
   }
 
   .tilt-zone:hover .pivot-box {
-    transition: transform 0.08s linear, box-shadow 0.3s ease, border-color 0.3s ease;
-    border-color: rgba(227, 168, 87, 0.5);
-    box-shadow: 0 25px 55px -16px rgba(227, 168, 87, 0.3);
+    transition: transform 0.08s linear, border-color 0.3s ease, box-shadow 0.3s ease;
+    border-color: rgba(243, 236, 226, 0.75);
+    box-shadow: 0 25px 60px -20px rgba(227, 168, 87, 0.25);
   }
 
   .logo-box {
@@ -159,7 +157,8 @@
     font-size: clamp(2.2rem, 6.5vw, 4.2rem);
     line-height: 1.1;
     letter-spacing: -0.01em;
-    color: var(--ink);
+    color: var(--cream);
+    text-shadow: 0 0 24px rgba(227, 168, 87, 0.3);
   }
 
   h1 span {
@@ -168,7 +167,7 @@
     font-weight: 500;
     font-size: clamp(1.05rem, 2.2vw, 1.4rem);
     letter-spacing: 0.16em;
-    color: var(--amber-deep);
+    color: var(--amber);
     margin-top: 0.85rem;
     position: relative;
     padding-top: 0.85rem;
@@ -182,7 +181,7 @@
     transform: translateX(-50%);
     width: 40px;
     height: 1px;
-    background: var(--amber-deep);
+    background: var(--amber);
     opacity: 0.6;
   }
 
@@ -194,18 +193,8 @@
   .subtext {
     font-size: clamp(0.85rem, 1.6vw, 1rem);
     font-style: italic;
-    color: var(--muted-on-paper);
+    color: var(--muted);
     max-width: 32ch;
-  }
-
-  /* ---------- Whole-site frame ---------- */
-  .site-frame {
-    position: fixed;
-    inset: clamp(10px, 2.5vw, 22px);
-    border: 1px solid rgba(243, 236, 226, 0.22);
-    border-radius: 8px;
-    pointer-events: none;
-    z-index: 2;
   }
 
   /* ---------- Corner credit text ---------- */
@@ -243,7 +232,6 @@
 </style>
 </head>
 <body>
-  <div class="site-frame" aria-hidden="true"></div>
   <main>
     <div class="glow" aria-hidden="true"></div>
     <div class="content">
